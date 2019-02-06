@@ -1,24 +1,63 @@
 <ion-app>
-  <ion-split-pane>
-    <ion-menu>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Menu</ion-title>
+    <ion-header>
+        <ion-toolbar color="danger">
+            <ion-buttons slot="start">
+                <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title text-center style="margin: 10px">
+                My Restaurant
+            </ion-title>
+            <ion-segment (ionChange)="segmentChanged($event)">
+                <ion-segment-button value="appetizer">
+                    <ion-label>Appetizer</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="main-course">
+                    <ion-label>Main Course</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="dessert">
+                    <ion-label>Dessert</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="beverages">
+                    <ion-label>Beverages</ion-label>
+                </ion-segment-button>
+            </ion-segment>
         </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <ion-list>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>
-                {{p.title}}
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-        </ion-list>
-      </ion-content>
-    </ion-menu>
-    <ion-router-outlet main></ion-router-outlet>
-  </ion-split-pane>
+    </ion-header>
+
+    <ion-split-pane style="padding-top: 0px">
+        <ion-menu style="max-width: 200px; min-width: 200px">
+            <ion-header>
+                <ion-toolbar>
+                    <!--<ion-title>Menu</ion-title>-->
+                </ion-toolbar>
+            </ion-header>
+            <ion-content>
+                <ion-list style="margin-top: 40px">
+                    <!--<ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">-->
+                        <!--<ion-item [routerDirection]="'root'" [routerLink]="[p.url]">-->
+                            <!--<ion-icon slot="start" [name]="p.icon"></ion-icon>-->
+                            <!--<ion-label>-->
+                                <!--{{p.title}}-->
+                            <!--</ion-label>-->
+                        <!--</ion-item>-->
+                    <!--</ion-menu-toggle>-->
+                    <ion-menu-toggle auto-hide="false" style="margin-top: 100px">
+                        <ion-item text-center>
+                            <ion-label>Softdrinks</ion-label>
+                        </ion-item>
+                        <ion-item text-center>
+                            <ion-label>Coffee</ion-label>
+                        </ion-item>
+                        <ion-item text-center>
+                            <ion-label>Shakes</ion-label>
+                        </ion-item>
+                        <ion-item text-center>
+                            <ion-label>Fruit Drinks</ion-label>
+                        </ion-item>
+                    </ion-menu-toggle>
+                </ion-list>
+            </ion-content>
+        </ion-menu>
+        <ion-router-outlet main></ion-router-outlet>
+    </ion-split-pane>
 </ion-app>

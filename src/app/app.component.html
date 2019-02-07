@@ -7,18 +7,9 @@
             <ion-title text-center style="margin: 10px">
                 My Restaurant
             </ion-title>
-            <ion-segment (ionChange)="segmentChanged($event)">
-                <ion-segment-button value="appetizer">
-                    <ion-label>Appetizer</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="main-course">
-                    <ion-label>Main Course</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="dessert">
-                    <ion-label>Dessert</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="beverages">
-                    <ion-label>Beverages</ion-label>
+            <ion-segment [(ngModel)]="selectedMenuName" (ionChange)="menuChanged($event)">
+                <ion-segment-button *ngFor="let menuItem of menu" [attr.checked]="menuItem == selectedMenu ? 'checked' : null" value="{{menuItem.name}}">
+                    <ion-label>{{menuItem.name}}</ion-label>
                 </ion-segment-button>
             </ion-segment>
         </ion-toolbar>
@@ -42,17 +33,8 @@
                         <!--</ion-item>-->
                     <!--</ion-menu-toggle>-->
                     <ion-menu-toggle auto-hide="false" style="margin-top: 100px">
-                        <ion-item text-center>
-                            <ion-label>Softdrinks</ion-label>
-                        </ion-item>
-                        <ion-item text-center>
-                            <ion-label>Coffee</ion-label>
-                        </ion-item>
-                        <ion-item text-center>
-                            <ion-label>Shakes</ion-label>
-                        </ion-item>
-                        <ion-item text-center>
-                            <ion-label>Fruit Drinks</ion-label>
+                        <ion-item *ngFor="let category of selectedMenu.categories" text-center>
+                            <ion-label [attr.color]="category == selectedCategory ? 'danger' : 'medium'">{{category.name}}</ion-label>
                         </ion-item>
                     </ion-menu-toggle>
                 </ion-list>

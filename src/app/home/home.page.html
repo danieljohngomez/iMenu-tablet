@@ -8,65 +8,28 @@
 
 
             <ion-col>
-                <ion-searchbar placeholder="Search" debounce="500"></ion-searchbar>
+                <ion-searchbar placeholder="Search" animated="true" debounce="500" [(ngModel)]="searchText"></ion-searchbar>
 
                 <ion-grid>
-                    <ion-row>
-                        <ion-col>
+                    <ion-row *ngFor="let item of selectedCategory.items">
+                        <ion-col *ngIf="item.name && item.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1">
                             <ion-card text-center>
-                                <ion-img src="assets/food/beverages/chocolate-shake.png"></ion-img>
+                                <ion-img src="assets{{item.image}}"></ion-img>
                                 <ion-card-header>
-                                    <ion-label>Chocolate Shake - P75</ion-label>
+                                    <ion-label>{{item.name}} - P{{item.price}}</ion-label>
                                 </ion-card-header>
                                 <ion-card-content>
-                                    <ion-button shape="round">Add</ion-button>
-                                </ion-card-content>
-                            </ion-card>
-                        </ion-col>
-                        <ion-col>
-                            <ion-card text-center>
-                                <ion-img src="assets/food/beverages/strawberry-shake.png"></ion-img>
-                                <ion-card-header>
-                                    <ion-label>Strawberry Shake - P75</ion-label>
-                                </ion-card-header>
-                                <ion-card-content>
-                                    <ion-button shape="round">Add</ion-button>
+                                    <ion-button shape="round" (click)="addOrder(item)">Add</ion-button>
                                 </ion-card-content>
                             </ion-card>
                         </ion-col>
                     </ion-row>
-
-                    <ion-row>
-                        <ion-col>
-                            <ion-card text-center>
-                                <ion-img src="assets/food/beverages/mango-shake.png"></ion-img>
-                                <ion-card-header>
-                                    <ion-label>Mango Shake - P75</ion-label>
-                                </ion-card-header>
-                                <ion-card-content>
-                                    <ion-button shape="round">Add</ion-button>
-                                </ion-card-content>
-                            </ion-card>
-                        </ion-col>
-                        <ion-col>
-                            <ion-card text-center>
-                                <ion-img src="assets/food/beverages/yogurt-shake.png"></ion-img>
-                                <ion-card-header>
-                                    <ion-label>Yogurt Shake - P75</ion-label>
-                                </ion-card-header>
-                                <ion-card-content>
-                                    <ion-button shape="round">Add</ion-button>
-                                </ion-card-content>
-                            </ion-card>
-                        </ion-col>
-                    </ion-row>
-
                 </ion-grid>
             </ion-col>
 
 
             <ion-col>
-                <ion-grid style="position: fixed">
+                <ion-grid> <!--style="position: fixed"-->
                     <ion-row>
                         <ion-col>
                             <ion-card class="welcome-card">
@@ -100,45 +63,26 @@
                                     </ion-card-subtitle>
                                 </ion-card-header>
 
-                                <ion-grid text-center>
-                                    <ion-row>
-                                        <ion-col>
-                                            <ion-label>Mango Shake</ion-label>
+                                    <ion-grid text-center>
+                                            <ion-row *ngFor="let item of order; let i = index">
+                                                <ion-col>
+                                                    <ion-label>{{item.name}}</ion-label>
+                                                    <br>
+                                                    <ion-grid>
+                                                        <ion-row>
+                                                            <ion-col><ion-button (click)="decrementQuantity(i)" color="danger">{{item.quantity == 0 ? 'Del' : '-'}}</ion-button></ion-col>
+                                                            <ion-col><ion-input value="{{item.quantity}}"></ion-input></ion-col>
+                                                            <ion-col><ion-button (click)="incrementQuantity(i)">+</ion-button></ion-col>
+                                                        </ion-row>
+                                                    </ion-grid>
+                                                </ion-col>
+                                                <ion-col>
+                                                    <br>
+                                                    <ion-label><b>P{{item.quantity * item.price}}</b></ion-label>
+                                                </ion-col>
+                                            </ion-row>
                                             <br>
-                                            <ion-grid>
-                                                <ion-row>
-                                                    <ion-col><ion-button>-</ion-button></ion-col>
-                                                    <ion-col><ion-input placeholder="0"></ion-input></ion-col>
-                                                    <ion-col><ion-button>+</ion-button></ion-col>
-                                                </ion-row>
-                                            </ion-grid>
-                                        </ion-col>
-                                        <ion-col>
-                                            <br>
-                                            <ion-label><b>P75</b></ion-label>
-                                        </ion-col>
-                                    </ion-row>
-
-                                    <br>
-
-                                    <ion-row>
-                                        <ion-col>
-                                            <ion-label>Yogurt Shake</ion-label>
-                                            <br>
-                                            <ion-grid>
-                                                <ion-row>
-                                                    <ion-col><ion-button>-</ion-button></ion-col>
-                                                    <ion-col><ion-input placeholder="0"></ion-input></ion-col>
-                                                    <ion-col><ion-button>+</ion-button></ion-col>
-                                                </ion-row>
-                                            </ion-grid>
-                                        </ion-col>
-                                        <ion-col>
-                                            <br>
-                                            <ion-label><b>P75</b></ion-label>
-                                        </ion-col>
-                                    </ion-row>
-                                </ion-grid>
+                                    </ion-grid>
 
 
                                 <ion-card-header>
@@ -149,7 +93,7 @@
                                                     <ion-card-title color="danger" style="font-size: 16px">Total:</ion-card-title>
                                                 </ion-col>
                                                 <ion-col text-center>
-                                                    <ion-card-title color="danger" style="font-size: 16px">P100</ion-card-title>
+                                                    <ion-card-title color="danger" style="font-size: 16px">P{{total}}</ion-card-title>
                                                 </ion-col>
                                             </ion-row>
                                         </ion-grid>
@@ -177,7 +121,7 @@
 
                     <ion-row>
                         <ion-col text-center>
-                            <ion-button shape="round" style="padding-left: 10px" color="secondary">Need Assistance
+                            <ion-button shape="round" style="padding-left: 10px" color="secondary" (click)="needAssistance()" disabled="{{!assistanceEnabled}}">Need Assistance
                             </ion-button>
                         </ion-col>
                     </ion-row>

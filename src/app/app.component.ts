@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { DataService } from './data-service';
 import * as _ from 'lodash';
 
 @Component({
@@ -70,13 +71,21 @@ export class AppComponent {
         name: 'Beverages',
         categories: [
             {
-                name: 'Softdrinks'
+                name: 'Softdrinks',
+                items: ["softdrinks1"]
             },
             {
                 name: 'Coffee'
             },
             {
-                name: 'Shakes'
+                name: 'Shakes',
+                items: [
+                    {
+                        name: "Chocolate Shake",
+                        price: 75,
+                        image: "/food/beverages/chocolate-shake.png"
+                    }
+                ]
             },
             {
                 name: 'Fruit Drinks'
@@ -92,10 +101,10 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private dataService: DataService
   ) {
     this.initializeApp();
-    console.log(_.VERSION)
   }
 
   initializeApp() {
@@ -108,6 +117,13 @@ export class AppComponent {
   menuChanged(event) {
     this.selectedMenu = _.find(this.menu, {name: this.selectedMenuName});
     if (this.selectedMenu.categories && this.selectedMenu.categories.length > 0)
-        this.selectedCategory = this.selectedMenu.categories[0]
+        this.selectedCategory = this.selectedMenu.categories[0];
+    this.dataService.emitter.emit({menu: this.selectedMenu, category: this.selectedCategory})
   }
+
+  categoryChanged(category) {
+    this.selectedCategory = category;
+    this.dataService.emitter.emit({menu: this.selectedMenu, category: this.selectedCategory})
+  }
+
 }

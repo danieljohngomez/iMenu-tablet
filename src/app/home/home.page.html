@@ -10,19 +10,22 @@
             <ion-col>
                 <ion-searchbar placeholder="Search" animated="true" debounce="500" [(ngModel)]="searchText"></ion-searchbar>
 
-                <ion-grid>
-                    <ion-row *ngFor="let item of selectedCategory.items">
-                        <ion-col *ngIf="item.name && item.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1">
-                            <ion-card text-center>
-                                <ion-img src="assets{{item.image}}"></ion-img>
-                                <ion-card-header>
-                                    <ion-label>{{item.name}} - P{{item.price}}</ion-label>
-                                </ion-card-header>
-                                <ion-card-content>
-                                    <ion-button shape="round" (click)="addOrder(item)">Add</ion-button>
-                                </ion-card-content>
-                            </ion-card>
-                        </ion-col>
+                <ion-grid *ngIf="selectedCategory">
+                    <ion-row>
+                        <div *ngFor="let item of selectedCategory.items">
+                            <ion-col *ngIf="item.name && item.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1">
+                                <ion-card text-center style="max-width: 150px; width: 150px;">
+                                    <ion-img src="{{item.image}}"></ion-img>
+                                    <ion-card-header>
+                                        <ion-label>{{item.name}}</ion-label><br>
+                                        <ion-label>P{{item.price}}</ion-label>
+                                    </ion-card-header>
+                                    <ion-card-content>
+                                        <ion-button shape="round" (click)="addOrder(item)">Add</ion-button>
+                                    </ion-card-content>
+                                </ion-card>
+                            </ion-col>
+                        </div>
                     </ion-row>
                 </ion-grid>
             </ion-col>

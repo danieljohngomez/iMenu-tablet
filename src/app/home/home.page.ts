@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DataService } from '../data-service';
 import * as _ from 'lodash';
 import { ToastController } from '@ionic/angular';
-
+import firebase from "../../main"
 
 @Component({
   selector: 'app-home',
@@ -11,8 +11,8 @@ import { ToastController } from '@ionic/angular';
 })
 export class HomePage {
 
-    public selectedMenu = {};
-    public selectedCategory = {};
+    public selectedMenu;
+    public selectedCategory;
     public order = [];
     public total = 0;
     public searchText = '';
@@ -20,9 +20,27 @@ export class HomePage {
 
     constructor(private dataService:DataService,
                 private toastController: ToastController) {
+        var db = firebase.firestore();
+        var storage = firebase.storage();
         this.dataService.emitter.subscribe(res => {
+            console.log(`[home-page] Event received`);
+            console.log(res);
+            if (res.menu.id == null)
+                return;
             this.selectedMenu = res.menu;
             this.selectedCategory = res.category;
+            var path = `menu/${this.selectedMenu.id}/categories/${this.selectedCategory.id}/items`;
+            db.collection(path).get().then((itemsSnapshot) => {
+                this.selectedCategory.items = _.map(itemsSnapshot.docs, (itemSnapshot) => itemSnapshot.data());
+                this.selectedCategory.items.forEach((item) => {
+                    if(item.image) {
+                        storage.ref(item.image).getDownloadURL().then((url) => {
+                            console.log(url);
+                            item.image = url;
+                        })
+                    }
+                })
+            });
         })
     }
 

@@ -32,7 +32,7 @@
                             <!--</ion-label>-->
                         <!--</ion-item>-->
                     <!--</ion-menu-toggle>-->
-                    <ion-menu-toggle auto-hide="false" style="margin-top: 100px">
+                    <ion-menu-toggle auto-hide="false" style="margin-top: 100px" *ngIf="selectedMenu">
                         <ion-item *ngFor="let category of selectedMenu.categories" text-center (click)="categoryChanged(category)">
                             <ion-label [attr.color]="category == selectedCategory ? 'danger' : 'medium'">{{category.name}}</ion-label>
                         </ion-item>

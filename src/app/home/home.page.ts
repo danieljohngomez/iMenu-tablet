@@ -23,8 +23,6 @@ export class HomePage {
         var db = firebase.firestore();
         var storage = firebase.storage();
         this.dataService.emitter.subscribe(res => {
-            console.log(`[home-page] Event received`);
-            console.log(res);
             if (res.menu.id == null)
                 return;
             this.selectedMenu = res.menu;
@@ -35,13 +33,17 @@ export class HomePage {
                 this.selectedCategory.items.forEach((item) => {
                     if(item.image) {
                         storage.ref(item.image).getDownloadURL().then((url) => {
-                            console.log(url);
                             item.image = url;
+                            item.show = true;
                         })
                     }
                 })
             });
         })
+    }
+
+    imageLoaded(item) {
+        item.show = true;
     }
 
     addOrder(item) {

@@ -26,3 +26,8 @@ export default firebase;
 
 console.log("initialized")
 
+var ref = firebase.storage().ref('/food/beverages/shakes/chocolate-shake.png')
+ref.getMetadata().then((metadata) => {
+
+    console.log(metadata);
+})

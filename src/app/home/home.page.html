@@ -15,7 +15,10 @@
                         <div *ngFor="let item of selectedCategory.items">
                             <ion-col *ngIf="item.name && item.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1">
                                 <ion-card text-center style="max-width: 150px; width: 150px;">
-                                    <ion-img src="{{item.image}}"></ion-img>
+                                    <div style="max-height: 100px; height: 100px" *ngIf="!item.show">
+                                        <ion-spinner style="margin-top: 40px"></ion-spinner>
+                                    </div>
+                                    <ion-img [src]="item.image" *ngIf="item.show" (ionImgDidLoad)="imageLoaded(item)"></ion-img>
                                     <ion-card-header>
                                         <ion-label>{{item.name}}</ion-label><br>
                                         <ion-label>P{{item.price}}</ion-label>

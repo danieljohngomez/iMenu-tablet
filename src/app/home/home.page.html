@@ -48,7 +48,7 @@
                                                     </ion-card-title>
                                                 </ion-col>
                                                 <ion-col text-center>
-                                                    <ion-card-title color="danger" style="font-size: 16px">Table No. 3
+                                                    <ion-card-title color="danger" style="font-size: 16px">Table No. 17
                                                     </ion-card-title>
                                                 </ion-col>
                                             </ion-row>
@@ -115,10 +115,22 @@
                             <ion-grid>
                                 <ion-row align-items-center>
                                     <ion-col>
-                                        <ion-button shape="round" expand="full" color="success">Send Order</ion-button>
+                                        <ion-input [(ngModel)]="customerName" placeholder="Enter Name"></ion-input>
+                                    </ion-col>
+                                    <ion-col align-items-center>
+                                        <ion-checkbox [(ngModel)]="takeOut" ></ion-checkbox>
+                                        <label style="margin: 10px;">Take Out</label>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row align-items-center>
+                                    <ion-col>
+                                        <ion-button shape="round" expand="full" color="success"
+                                                    [disabled]="!order || order.length === 0"
+                                                    (click)="sendOrder()">Send Order</ion-button>
                                     </ion-col>
                                     <ion-col>
-                                        <ion-button shape="round" expand="full" color="warning">Bill Out</ion-button>
+                                        <ion-button shape="round" expand="full" color="warning"
+                                                    (click)="billOut()">Bill Out</ion-button>
                                     </ion-col>
                                 </ion-row>
                             </ion-grid>
